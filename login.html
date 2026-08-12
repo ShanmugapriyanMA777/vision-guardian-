@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guardian Authentication - VisionAssist Guardian Portal</title>
+  <script>
+    localStorage.setItem('vg_guardian_user', JSON.stringify({
+      name: 'Dr. Sarah Connor',
+      email: 'sarah.connor@visionassist.ai',
+      id: 'usr_demo_guardian'
+    }));
+    window.location.replace('dashboard.html');
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">

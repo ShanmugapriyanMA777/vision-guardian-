@@ -244,11 +244,22 @@ function initAuthUI() {
 
 function checkAuthSession() {
   const currentPage = window.location.pathname.split('/').pop().toLowerCase();
-  const publicPages = ['index.html', 'login.html', ''];
-  const userStr = localStorage.getItem('vg_guardian_user');
+  let userStr = localStorage.getItem('vg_guardian_user');
 
-  if (!publicPages.includes(currentPage) && !userStr) {
-    window.location.href = 'login.html';
+  // Auto-login default Demo Guardian if no active session
+  if (!userStr) {
+    const defaultDemoUser = {
+      name: 'Dr. Sarah Connor',
+      email: 'sarah.connor@visionassist.ai',
+      id: 'usr_demo_guardian'
+    };
+    localStorage.setItem('vg_guardian_user', JSON.stringify(defaultDemoUser));
+    userStr = JSON.stringify(defaultDemoUser);
+  }
+
+  // If user visits login.html, redirect immediately to dashboard.html
+  if (currentPage === 'login.html' || currentPage === '') {
+    window.location.href = 'dashboard.html';
     return;
   }
 
