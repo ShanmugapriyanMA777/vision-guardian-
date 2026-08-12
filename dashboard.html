@@ -134,19 +134,25 @@
           <div class="card col-4">
             <div class="card-header">
               <span class="card-title">Active Navigation</span>
-              <span style="font-size: 11px; font-weight: 700; color: var(--success-600);">NAVIGATING</span>
+              <span style="font-size: 11px; font-weight: 700; color: var(--warning-600);" id="nav-status-badge">⚠️ DEVIATION</span>
             </div>
-            <div class="hud-navigation">
+            <div class="hud-navigation" style="background: linear-gradient(135deg, #78350f, #451a03);">
               <div class="hud-nav-title">DESTINATION</div>
-              <div class="hud-nav-dest" id="nav-destination">Apollo Hospital, Main Entrance</div>
+              <div class="hud-nav-dest" id="nav-destination">Home</div>
               <div class="hud-nav-metrics">
                 <div>
+                  <div style="font-size: 10px; opacity: 0.8;">ROUTE STATUS</div>
+                  <div style="font-size: 13px; font-weight: 800; color: #f59e0b;" id="nav-route-status">⚠️ Route deviation detected</div>
+                </div>
+              </div>
+              <div class="hud-nav-metrics" style="margin-top:8px; padding-top:8px;">
+                <div>
                   <div style="font-size: 10px; opacity: 0.8;">DISTANCE</div>
-                  <div style="font-size: 16px; font-weight: 800;" id="nav-distance">650 m</div>
+                  <div style="font-size: 15px; font-weight: 800;" id="nav-distance">1.2 km</div>
                 </div>
                 <div>
                   <div style="font-size: 10px; opacity: 0.8;">ETA</div>
-                  <div style="font-size: 16px; font-weight: 800;" id="nav-eta">8 mins</div>
+                  <div style="font-size: 15px; font-weight: 800;" id="nav-eta">15 mins</div>
                 </div>
               </div>
             </div>
@@ -186,29 +192,118 @@
             </div>
           </div>
 
-          <!-- Card 6: Quick Daily Metrics -->
+          <!-- Card: Intelligent Safety Alerts -->
           <div class="card col-12">
             <div class="card-header">
-              <span class="card-title">Today's Activity Summary</span>
-              <a href="reports.html" style="font-size: 12px; font-weight: 700;">View Daily Report</a>
+              <span class="card-title">🚨 Intelligent Safety Alerts (Risk Categorized)</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="background: var(--critical-50); border-left: 5px solid var(--critical-500); padding: 12px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-weight: 800; color: var(--critical-700);">🚨 Vehicle approaching — High Risk</span>
+                  <div style="font-size: 12px; color: var(--slate-600);">Car detected on zebra crossing at 2.4m distance. Warning spoken immediately.</div>
+                </div>
+                <span style="font-size: 11px; font-weight: 700; color: var(--slate-505);">10:32 AM</span>
+              </div>
+              <div style="background: var(--warning-50); border-left: 5px solid var(--warning-500); padding: 12px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-weight: 800; color: var(--warning-600);">⚠️ Stairs detected — Medium Risk</span>
+                  <div style="font-size: 12px; color: var(--slate-600);">Staircase entrance ahead. User advised to use handrails.</div>
+                </div>
+                <span style="font-size: 11px; font-weight: 700; color: var(--slate-505);">11:40 AM</span>
+              </div>
+              <div style="background: var(--primary-50); border-left: 5px solid var(--primary-500); padding: 12px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span style="font-weight: 800; color: var(--primary-700);">ℹ️ Person detected — Informational</span>
+                  <div style="font-size: 12px; color: var(--slate-600);">Known face "Priya" detected nearby at 3.0m distance.</div>
+                </div>
+                <span style="font-size: 11px; font-weight: 700; color: var(--slate-505);">09:15 AM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Smart Geofencing -->
+          <div class="card col-6">
+            <div class="card-header">
+              <span class="card-title">🏠 Smart Geofencing & Safe Zones</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-200); padding-bottom:8px;">
+                <span>🏠 Home (Safe Zone)</span>
+                <span style="font-weight:700; color:var(--primary-600);">Radius: 100m</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-200); padding-bottom:8px;">
+                <span>🎓 College (Safe Zone)</span>
+                <span style="font-weight:700; color:var(--warning-600);">Exited (Alert Triggered)</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:4px;">
+                <span>🏥 Hospital (Safe Zone)</span>
+                <span style="font-weight:700; color:var(--primary-600);">Radius: 100m</span>
+              </div>
+              <div style="background: var(--warning-50); border: 1px solid var(--warning-100); padding: 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; color: var(--warning-600); text-align: center; margin-top: 6px;" id="geofence-alert-box">
+                ⚠️ Geofence: "User has left the College safe zone."
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: AI Guardian Assistant Widget -->
+          <div class="card col-6">
+            <div class="card-header">
+              <span class="card-title">🤖 AI Guardian Assistant</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; height: 130px; overflow-y: auto; border: 1px solid var(--slate-200); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; background: var(--slate-50);" id="ai-chat-history">
+              <div style="margin-bottom: 8px;">
+                <span style="font-weight: 800; color: var(--primary-700);">AI Guardian:</span>
+                <span style="color: var(--slate-600);">Welcome Sarah. Ask me anything about the user's live status, reports, or device health.</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+              <input type="text" id="ai-chat-input" placeholder="e.g. Where is the user? or Any problems today?" style="flex: 1; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--slate-300); font-size: 13px;">
+              <button id="ai-chat-send-btn" class="btn btn-primary" style="padding: 10px 16px;">Ask</button>
+            </div>
+          </div>
+
+          <!-- Card: Daily Safety Report -->
+          <div class="card col-12">
+            <div class="card-header">
+              <span class="card-title">📊 VisionAssist Daily Safety Summary</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center;">
-              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
-                <div class="stat-number" id="stat-objects-count">247</div>
-                <div class="stat-label">Objects Detected</div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">5.8 km</div>
+                <div class="stat-label" style="font-size:10px;">Distance</div>
               </div>
-              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
-                <div class="stat-number" id="stat-alerts-count">3</div>
-                <div class="stat-label">Safety Alerts</div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">4</div>
+                <div class="stat-label" style="font-size:10px;">Navigation trips</div>
               </div>
-              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
-                <div class="stat-number" id="stat-distance-count">5.8 km</div>
-                <div class="stat-label">Distance Travelled</div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">3</div>
+                <div class="stat-label" style="font-size:10px;">Safety alerts</div>
               </div>
-              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
-                <div class="stat-number" id="stat-trips-count">4</div>
-                <div class="stat-label">Navigation Trips</div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">0</div>
+                <div class="stat-label" style="font-size:10px;">Critical alerts</div>
               </div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">247</div>
+                <div class="stat-label" style="font-size:10px;">Object detections</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">6</div>
+                <div class="stat-label" style="font-size:10px;">OCR sessions</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">2</div>
+                <div class="stat-label" style="font-size:10px;">Currency scans</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 12px; border-radius: var(--radius-md);">
+                <div class="stat-number" style="font-size:22px;">7h 12m</div>
+                <div class="stat-label" style="font-size:10px;">Device uptime</div>
+              </div>
+            </div>
+            <div style="background: var(--primary-50); border: 1px solid var(--primary-100); padding: 14px; border-radius: var(--radius-md); margin-top: 14px; font-size: 13px; color: var(--primary-900); font-weight: 600;">
+              💡 <b>Safety Summary:</b> "Overall, the user completed their planned trips safely. Three minor safety alerts occurred, with no emergency events."
             </div>
           </div>
 
@@ -217,5 +312,55 @@
     </main>
   </div>
 
+  <!-- Chat Script Hook -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sendBtn = document.getElementById('ai-chat-send-btn');
+      const chatInput = document.getElementById('ai-chat-input');
+      const chatHistory = document.getElementById('ai-chat-history');
+
+      if (sendBtn && chatInput && chatHistory) {
+        sendBtn.addEventListener('click', () => {
+          const query = chatInput.value.trim();
+          if (!query) return;
+
+          // Render User Msg
+          const userDiv = document.createElement('div');
+          userDiv.style.marginBottom = '8px';
+          userDiv.innerHTML = `<span style="font-weight:800; color:var(--slate-800);">Guardian:</span> <span style="color:var(--slate-700);">${query}</span>`;
+          chatHistory.appendChild(userDiv);
+          chatInput.value = '';
+
+          // Scroll
+          chatHistory.scrollTop = chatHistory.scrollHeight;
+
+          // Render AI Answer
+          setTimeout(() => {
+            let reply = "I can help with location, reports, and alerts. Ask me 'Where is the user?' or 'Any problems today?'";
+            const qLower = query.toLowerCase();
+
+            if (qLower.includes('where')) {
+              reply = "The user is currently near Sholinganallur. They are walking toward their saved destination. GPS accuracy is approximately 8 meters.";
+            } else if (qLower.includes('problem') || qLower.includes('alerts') || qLower.includes('issue')) {
+              reply = "There were two vehicle-related safety alerts. No SOS events occurred.";
+            } else if (qLower.includes('battery') || qLower.includes('status')) {
+              reply = "Smart glasses battery is at 78%. Camera, GPS, and AI subsystems are fully active.";
+            }
+
+            const aiDiv = document.createElement('div');
+            aiDiv.style.marginBottom = '8px';
+            aiDiv.innerHTML = `<span style="font-weight:800; color:var(--primary-700);">AI Guardian:</span> <span style="color:var(--slate-600);">${reply}</span>`;
+            chatHistory.appendChild(aiDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+          }, 800);
+        });
+
+        // Trigger on Enter
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') sendBtn.click();
+        });
+      }
+    });
+  </script>
 </body>
 </html>

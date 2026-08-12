@@ -1,12 +1,12 @@
 /* VisionAssist Guardian Portal - Core CSS Design System */
 :root {
-  --primary-900: #0b192c;
-  --primary-800: #0f2756;
-  --primary-700: #1e3a8a;
-  --primary-600: #2563eb;
-  --primary-500: #3b82f6;
-  --primary-100: #dbeafe;
-  --primary-50: #eff6ff;
+  --primary-900: #022c1d; /* Deep Forest Green */
+  --primary-800: #064e3b; /* Mid Deep Green */
+  --primary-700: #0f766e; /* Teal Green */
+  --primary-600: #059669; /* Rich Grass Green */
+  --primary-500: #10b981; /* Bright Green */
+  --primary-100: #d1fae5; /* Soft Mint Green */
+  --primary-50: #f0fdf4;  /* Light Mint Background */
 
   --success-700: #047857;
   --success-600: #059669;
@@ -14,23 +14,23 @@
   --success-100: #d1fae5;
   --success-50: #ecfdf5;
 
-  --warning-600: #d97706;
-  --warning-500: #f59e0b;
-  --warning-100: #fef3c7;
+  --warning-600: #b45309; /* Rich Dark Gold */
+  --warning-500: #d97706; /* Golden Amber */
+  --warning-100: #fef3c7; /* Light Gold */
   --warning-50: #fffbeb;
 
-  --critical-700: #b91c1c;
+  --critical-700: #991b1b;
   --critical-600: #dc2626;
   --critical-500: #ef4444;
   --critical-100: #fee2e2;
   --critical-50: #fef2f2;
 
-  --slate-900: #0f172a;
-  --slate-800: #1e293b;
-  --slate-700: #334155;
-  --slate-600: #475569;
-  --slate-500: #64748b;
-  --slate-400: #94a3b8;
+  --slate-900: #042f1a; /* Very Deep Green-Black for high text contrast */
+  --slate-800: #0f172a; /* Slate Dark */
+  --slate-700: #1e293b;
+  --slate-600: #334155;
+  --slate-505: #475569;
+  --slate-400: #64748b;
   --slate-300: #cbd5e1;
   --slate-200: #e2e8f0;
   --slate-100: #f1f5f9;
