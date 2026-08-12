@@ -5,14 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initSettingsUI() {
-  const demoToggle = document.getElementById('demo-mode-toggle');
-  if (demoToggle) {
-    demoToggle.checked = isDemoMode();
-    demoToggle.addEventListener('change', (e) => {
-      setDemoMode(e.target.checked);
-    });
-  }
-
   // Load privacy settings states
   const privacyCheckboxes = ['share-location', 'share-objects', 'share-navigation', 'share-ocr', 'share-currency', 'share-ai'];
   privacyCheckboxes.forEach(id => {

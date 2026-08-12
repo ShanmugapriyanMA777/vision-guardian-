@@ -22,11 +22,5 @@ function getSupabase() {
 
 // Utility helper to check demo mode status
 function isDemoMode() {
-  const mode = localStorage.getItem('vg_demo_mode');
-  return mode === 'true'; // Default to FALSE to connect to live Supabase backend
-}
-
-function setDemoMode(active) {
-  localStorage.setItem('vg_demo_mode', active ? 'true' : 'false');
-  window.location.reload();
+  return false; // Force direct database access across all modules
 }
