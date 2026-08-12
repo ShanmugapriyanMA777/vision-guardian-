@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guardian Sign In - VisionAssist Guardian Portal</title>
+  <title>Guardian Authentication - VisionAssist Guardian Portal</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
@@ -16,16 +16,23 @@
   <div style="width: 100%; max-width: 440px; padding: 20px;">
     <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--slate-200); box-shadow: var(--shadow-lg); padding: 36px;">
       
-      <div style="text-align: center; margin-bottom: 28px;">
+      <div style="text-align: center; margin-bottom: 24px;">
         <div style="width: 48px; height: 48px; background: var(--primary-100); color: var(--primary-700); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h2 style="font-size: 22px; font-weight: 800; color: var(--slate-900);">Guardian Sign In</h2>
-        <p style="font-size: 13px; color: var(--slate-500); margin-top: 4px;">VisionAssist Authorized Safety Portal</p>
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--slate-900);">VisionAssist Guardian</h2>
+        <p style="font-size: 13px; color: var(--slate-500); margin-top: 4px;">Authorized Caregiver & Safety Portal</p>
       </div>
 
-      <div id="auth-message" style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 16px; color: var(--primary-600);"></div>
+      <!-- Tabs -->
+      <div style="display: flex; border-bottom: 2px solid var(--slate-200); margin-bottom: 24px;">
+        <button id="tab-login" class="btn" style="flex:1; padding: 10px; font-weight:700; border-bottom: 3px solid var(--primary-600); color: var(--primary-700); border-radius: 0;">Sign In</button>
+        <button id="tab-signup" class="btn" style="flex:1; padding: 10px; font-weight:700; border-bottom: 3px solid transparent; color: var(--slate-500); border-radius: 0;">Sign Up</button>
+      </div>
 
+      <div id="auth-message" style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 16px; color: var(--primary-600); min-height: 20px;"></div>
+
+      <!-- Login Form -->
       <form id="login-form" style="display: flex; flex-direction: column; gap: 16px;">
         <div>
           <label style="display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 6px;">Guardian Email</label>
@@ -42,12 +49,65 @@
         </button>
       </form>
 
+      <!-- Signup Form -->
+      <form id="signup-form" style="display: none; flex-direction: column; gap: 16px;">
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 6px;">Guardian Full Name</label>
+          <input type="text" id="name" placeholder="Sarah Connor" required style="width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--slate-300); font-size: 14px;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 6px;">Email Address</label>
+          <input type="email" id="signup-email" placeholder="sarah.connor@guardian.com" required style="width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--slate-300); font-size: 14px;">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; color: var(--slate-700); margin-bottom: 6px;">Create Password</label>
+          <input type="password" id="signup-password" placeholder="Min. 8 characters" required style="width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--slate-300); font-size: 14px;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 12px; width: 100%; font-size: 15px; margin-top: 8px;">
+          Create Guardian Account
+        </button>
+      </form>
+
       <div style="margin-top: 24px; text-align: center; font-size: 13px; color: var(--slate-500); border-top: 1px solid var(--slate-200); padding-top: 16px;">
         <span>Quick Demo Access?</span>
         <a href="dashboard.html" style="font-weight: 700; margin-left: 6px;">Enter Demo Dashboard →</a>
       </div>
     </div>
   </div>
+
+  <script>
+    // Tab switching logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabLogin = document.getElementById('tab-login');
+      const tabSignup = document.getElementById('tab-signup');
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const authMsg = document.getElementById('auth-message');
+
+      tabLogin.addEventListener('click', () => {
+        tabLogin.style.borderBottomColor = 'var(--primary-600)';
+        tabLogin.style.color = 'var(--primary-700)';
+        tabSignup.style.borderBottomColor = 'transparent';
+        tabSignup.style.color = 'var(--slate-500)';
+        loginForm.style.display = 'flex';
+        signupForm.style.display = 'none';
+        if (authMsg) authMsg.textContent = '';
+      });
+
+      tabSignup.addEventListener('click', () => {
+        tabSignup.style.borderBottomColor = 'var(--primary-600)';
+        tabSignup.style.color = 'var(--primary-700)';
+        tabLogin.style.borderBottomColor = 'transparent';
+        tabLogin.style.color = 'var(--slate-500)';
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'flex';
+        if (authMsg) authMsg.textContent = '';
+      });
+    });
+  </script>
 
 </body>
 </html>

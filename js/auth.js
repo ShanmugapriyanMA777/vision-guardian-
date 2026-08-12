@@ -42,8 +42,8 @@ function initAuthUI() {
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
       const authMsg = document.getElementById('auth-message');
 
       if (authMsg) authMsg.textContent = 'Registering guardian account...';
