@@ -82,9 +82,14 @@ function initAuthUI() {
         if (error) {
           if (authMsg) { authMsg.textContent = `Registration failed: ${error.message}`; authMsg.style.color = 'var(--critical-600)'; }
         } else if (data.user && data.user.identities && data.user.identities.length === 0) {
-          // Supabase returns a fake user with no identities when email already exists
           if (authMsg) { authMsg.textContent = 'An account with this email already exists. Please sign in instead.'; authMsg.style.color = 'var(--warning-600)'; }
         } else {
+          // Attempt to insert profile record from client-side fallback
+          if (data.session) {
+            await client.from('guardians').insert([
+              { auth_user_id: data.user.id, name: name, email: email }
+            ]);
+          }
           localStorage.setItem('vg_guardian_user', JSON.stringify({ name, email: data.user.email, id: data.user.id }));
           if (authMsg) { authMsg.textContent = '✅ Account created successfully! Redirecting...'; authMsg.style.color = 'var(--success-600)'; }
           setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
