@@ -1,5 +1,42 @@
 // VisionAssist Guardian Portal - Authentication Module
 
+window.onerror = function (message, source, lineno, colno, error) {
+  const authMsg = document.getElementById('auth-message');
+  if (authMsg) {
+    authMsg.textContent = `JS Error: ${message} (line ${lineno})`;
+    authMsg.style.color = 'var(--critical-600)';
+  }
+  return false;
+};
+
+window.onunhandledrejection = function (event) {
+  const authMsg = document.getElementById('auth-message');
+  if (authMsg) {
+    authMsg.textContent = `Promise Error: ${event.reason}`;
+    authMsg.style.color = 'var(--critical-600)';
+  }
+};
+
+// Redirect console errors to the UI message box for debugging
+const oldConsoleError = console.error;
+console.error = function(...args) {
+  oldConsoleError.apply(console, args);
+  const authMsg = document.getElementById('auth-message');
+  if (authMsg) {
+    authMsg.textContent = `Console Error: ${args.join(' ')}`;
+    authMsg.style.color = 'var(--critical-600)';
+  }
+};
+
+const oldConsoleLog = console.log;
+console.log = function(...args) {
+  oldConsoleLog.apply(console, args);
+  const authMsg = document.getElementById('auth-message');
+  if (authMsg && authMsg.textContent.includes('Signing') || authMsg.textContent.includes('Creating')) {
+    authMsg.textContent = `Log: ${args.join(' ')}`;
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   initAuthUI();
   checkAuthSession();
