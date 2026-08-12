@@ -1,6 +1,14 @@
 // VisionAssist Guardian Portal - Dashboard Module
 
-document.addEventListener('DOMContentLoaded', () => {
+function safeInit(fn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn);
+  } else {
+    fn();
+  }
+}
+
+safeInit(() => {
   if (document.getElementById('dashboard-page')) {
     initDashboard();
   }

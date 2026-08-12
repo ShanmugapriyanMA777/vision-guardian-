@@ -24,8 +24,8 @@
 
       <!-- Tabs -->
       <div style="display: flex; margin-bottom: 24px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--slate-200);">
-        <button id="tab-login" style="flex:1; padding: 12px; font-weight:700; font-size: 14px; background: var(--primary-600); color: white; border: none; cursor: pointer; transition: all 0.2s;">Sign In</button>
-        <button id="tab-signup" style="flex:1; padding: 12px; font-weight:700; font-size: 14px; background: var(--slate-100); color: var(--slate-600); border: none; cursor: pointer; transition: all 0.2s;">Create Account</button>
+        <button id="tab-login" type="button" style="flex:1; padding: 12px; font-weight:700; font-size: 14px; background: var(--primary-600); color: white; border: none; cursor: pointer; transition: all 0.2s;">Sign In</button>
+        <button id="tab-signup" type="button" style="flex:1; padding: 12px; font-weight:700; font-size: 14px; background: var(--slate-100); color: var(--slate-600); border: none; cursor: pointer; transition: all 0.2s;">Create Account</button>
       </div>
 
       <!-- Status Message -->
@@ -45,6 +45,10 @@
 
         <button type="submit" class="btn btn-primary" style="padding: 14px; width: 100%; font-size: 15px; margin-top: 4px; border-radius: var(--radius-md);">
           Sign In to Portal
+        </button>
+
+        <button type="button" id="btn-quick-demo" style="padding: 10px; width: 100%; font-size: 13px; margin-top: 4px; border-radius: var(--radius-md); background: var(--slate-100); color: var(--slate-700); border: 1px dashed var(--slate-300); font-weight: 600; cursor: pointer; transition: all 0.2s;">
+          ⚡ Quick Demo Sign In (1-Click)
         </button>
       </form>
 
@@ -77,33 +81,55 @@
   </div>
 
   <script>
-    // Tab switching logic
-    document.addEventListener('DOMContentLoaded', () => {
+    function safeInitTab(fn) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+    }
+
+    safeInitTab(() => {
       const tabLogin = document.getElementById('tab-login');
       const tabSignup = document.getElementById('tab-signup');
       const loginForm = document.getElementById('login-form');
       const signupForm = document.getElementById('signup-form');
       const authMsg = document.getElementById('auth-message');
+      const quickDemoBtn = document.getElementById('btn-quick-demo');
 
-      tabLogin.addEventListener('click', () => {
-        tabLogin.style.background = 'var(--primary-600)';
-        tabLogin.style.color = 'white';
-        tabSignup.style.background = 'var(--slate-100)';
-        tabSignup.style.color = 'var(--slate-600)';
-        loginForm.style.display = 'flex';
-        signupForm.style.display = 'none';
-        if (authMsg) authMsg.textContent = '';
-      });
+      if (tabLogin && tabSignup && loginForm && signupForm) {
+        tabLogin.addEventListener('click', () => {
+          tabLogin.style.background = 'var(--primary-600)';
+          tabLogin.style.color = 'white';
+          tabSignup.style.background = 'var(--slate-100)';
+          tabSignup.style.color = 'var(--slate-600)';
+          loginForm.style.display = 'flex';
+          signupForm.style.display = 'none';
+          if (authMsg) authMsg.textContent = '';
+        });
 
-      tabSignup.addEventListener('click', () => {
-        tabSignup.style.background = 'var(--primary-600)';
-        tabSignup.style.color = 'white';
-        tabLogin.style.background = 'var(--slate-100)';
-        tabLogin.style.color = 'var(--slate-600)';
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'flex';
-        if (authMsg) authMsg.textContent = '';
-      });
+        tabSignup.addEventListener('click', () => {
+          tabSignup.style.background = 'var(--primary-600)';
+          tabSignup.style.color = 'white';
+          tabLogin.style.background = 'var(--slate-100)';
+          tabLogin.style.color = 'var(--slate-600)';
+          loginForm.style.display = 'none';
+          signupForm.style.display = 'flex';
+          if (authMsg) authMsg.textContent = '';
+        });
+      }
+
+      if (quickDemoBtn) {
+        quickDemoBtn.addEventListener('click', () => {
+          const emailEl = document.getElementById('email');
+          const passEl = document.getElementById('password');
+          if (emailEl) emailEl.value = 'sarah.connor@visionassist.ai';
+          if (passEl) passEl.value = 'password123';
+          if (loginForm) {
+            loginForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+          }
+        });
+      }
     });
   </script>
 

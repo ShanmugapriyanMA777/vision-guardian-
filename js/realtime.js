@@ -46,6 +46,14 @@ function initMasterRealtimeChannel() {
     .subscribe();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function safeInit(fn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn);
+  } else {
+    fn();
+  }
+}
+
+safeInit(() => {
   initMasterRealtimeChannel();
 });
