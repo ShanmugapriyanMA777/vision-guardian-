@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardian Dashboard - VisionAssist Guardian Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Leaflet CSS & JS for Live Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/alerts.js"></script>
+  <script src="js/realtime.js"></script>
+</head>
+<body id="dashboard-page">
+
+  <div class="demo-banner" id="demo-banner-widget">
+    <span class="demo-badge">DEMO MODE</span>
+    <span>Simulated Live GPS & AI Companion Feeds • Data shown is real-time simulated</span>
+  </div>
+
+  <!-- Emergency SOS Modal Alert Popup -->
+  <div class="sos-banner" id="sos-alert-modal" style="display: none;">
+    <div class="sos-modal">
+      <div class="sos-icon">🚨</div>
+      <div class="sos-title">EMERGENCY SOS ALERT</div>
+      <p style="font-size: 15px; color: var(--slate-600); margin-top: 8px;">
+        User <b id="sos-user-name">Rahul</b> triggered emergency mode from smart glasses button!
+      </p>
+
+      <div style="background: var(--slate-50); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; text-align: left; font-size: 13px; space-y: 6px;">
+        <div><b>Location:</b> <span id="sos-user-location">OMR Main Road, Chennai</span></div>
+        <div><b>Time:</b> <span id="sos-user-time">Just now</span></div>
+        <div><b>Message:</b> <span id="sos-user-msg">Emergency SOS Button Held</span></div>
+      </div>
+
+      <div class="sos-actions">
+        <button id="sos-ack-btn" class="btn btn-outline" style="flex:1;">Acknowledge Alert</button>
+        <button id="sos-resolve-btn" class="btn btn-critical" style="flex:1;">Resolve Alert</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Guardian Portal
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">Dashboard</a>
+        <a href="tracking.html" class="nav-item">Live GPS Tracking</a>
+        <a href="alerts.html" class="nav-item">Safety & SOS Alerts</a>
+        <a href="activity.html" class="nav-item">AI Activity & OCR</a>
+        <a href="reports.html" class="nav-item">Daily Reports</a>
+        <a href="settings.html" class="nav-item">Device Health & Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="logout-btn" class="btn btn-outline" style="width:100%; color:white; border-color:rgba(255,255,255,0.2);">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <h2 style="font-size: 18px; font-weight: 800; color: var(--slate-900);">User Safety Guardian Overview</h2>
+          <span class="status-pill safe" id="status-safety">🟢 Safe</span>
+        </div>
+
+        <div class="header-actions">
+          <button id="trigger-demo-sos-btn" class="btn btn-critical" style="padding: 6px 12px; font-size: 12px;">
+            🚨 Trigger Test SOS
+          </button>
+          <div class="guardian-user-meta">
+            <div class="avatar-circle">G</div>
+            <div style="text-align: left;">
+              <div style="font-size: 13px; font-weight: 700; color: var(--slate-800);" id="guardian-name-display">Dr. Sarah Connor</div>
+              <div style="font-size: 10px; color: var(--slate-500);">Authorized Guardian</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="container">
+        <!-- Main Dashboard Cards Grid -->
+        <div class="dashboard-grid">
+          
+          <!-- Card 1: User Status & Device Connection -->
+          <div class="card col-4">
+            <div class="card-header">
+              <span class="card-title">User Status & Health</span>
+              <span class="status-pill safe" id="status-user-online">Online</span>
+            </div>
+            <div style="font-size: 18px; font-weight: 800; color: var(--slate-900);" id="user-display-name">Rahul (User)</div>
+            <div style="font-size: 12px; color: var(--slate-500); margin-top: 2px;">Last update: <span id="last-updated-time">Just now</span></div>
+
+            <div style="margin-top: 16px;">
+              <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700;">
+                <span>Smart Glasses Battery</span>
+                <span id="battery-level-text">78%</span>
+              </div>
+              <div class="battery-meter">
+                <div class="battery-fill" id="battery-fill" style="width: 78%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Current GPS Location -->
+          <div class="card col-4">
+            <div class="card-header">
+              <span class="card-title">Current Location</span>
+              <span style="font-size: 11px; font-weight: 700; color: var(--primary-600);" id="network-status-text">Online (4G)</span>
+            </div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--slate-800);" id="location-address">Agni College Campus, OMR Road, Chennai</div>
+            <div style="font-size: 12px; color: var(--slate-500); font-family: monospace; margin-top: 4px;" id="location-coords">12.9716° N, 80.2454° E</div>
+            <a href="tracking.html" style="display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 700;">View Live Tracking Map →</a>
+          </div>
+
+          <!-- Card 3: Active Navigation HUD -->
+          <div class="card col-4">
+            <div class="card-header">
+              <span class="card-title">Active Navigation</span>
+              <span style="font-size: 11px; font-weight: 700; color: var(--success-600);">NAVIGATING</span>
+            </div>
+            <div class="hud-navigation">
+              <div class="hud-nav-title">DESTINATION</div>
+              <div class="hud-nav-dest" id="nav-destination">Apollo Hospital, Main Entrance</div>
+              <div class="hud-nav-metrics">
+                <div>
+                  <div style="font-size: 10px; opacity: 0.8;">DISTANCE</div>
+                  <div style="font-size: 16px; font-weight: 800;" id="nav-distance">650 m</div>
+                </div>
+                <div>
+                  <div style="font-size: 10px; opacity: 0.8;">ETA</div>
+                  <div style="font-size: 16px; font-weight: 800;" id="nav-eta">8 mins</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Live Map Display -->
+          <div class="card col-8">
+            <div class="card-header">
+              <span class="card-title">Live Tracking Map</span>
+              <a href="tracking.html" style="font-size: 12px; font-weight: 700;">Full Map View</a>
+            </div>
+            <div id="map-element" class="map-container"></div>
+          </div>
+
+          <!-- Card 5: AI Engine & Hardware Status -->
+          <div class="card col-4">
+            <div class="card-header">
+              <span class="card-title">Device Health</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--slate-600);">Camera Status</span>
+                <span style="font-weight: 700; color: var(--success-600);" id="ai-camera-status">● Active</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--slate-600);">Microphone</span>
+                <span style="font-weight: 700; color: var(--success-600);" id="ai-mic-status">● Active</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--slate-600);">GPS Tracking</span>
+                <span style="font-weight: 700; color: var(--success-600);" id="ai-gps-status">● Active</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--slate-600);">AI Vision Engine</span>
+                <span style="font-weight: 700; color: var(--success-600);" id="ai-engine-status">● Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6: Quick Daily Metrics -->
+          <div class="card col-12">
+            <div class="card-header">
+              <span class="card-title">Today's Activity Summary</span>
+              <a href="reports.html" style="font-size: 12px; font-weight: 700;">View Daily Report</a>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center;">
+              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
+                <div class="stat-number" id="stat-objects-count">247</div>
+                <div class="stat-label">Objects Detected</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
+                <div class="stat-number" id="stat-alerts-count">3</div>
+                <div class="stat-label">Safety Alerts</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
+                <div class="stat-number" id="stat-distance-count">5.8 km</div>
+                <div class="stat-label">Distance Travelled</div>
+              </div>
+              <div style="background: var(--slate-50); padding: 16px; border-radius: var(--radius-md);">
+                <div class="stat-number" id="stat-trips-count">4</div>
+                <div class="stat-label">Navigation Trips</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
