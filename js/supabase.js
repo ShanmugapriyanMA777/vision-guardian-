@@ -1,6 +1,6 @@
 // VisionAssist Guardian Portal - Supabase Client Setup
-const SUPABASE_URL = "https://your-supabase-url.supabase.co"; // Will load from window or localStorage if available
-const SUPABASE_ANON_KEY = "your-anon-key";
+const SUPABASE_URL = "https://ryunlxxgmfwfnjcpovwg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dW5seHhnbWZ3Zm5qY3BvdndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMzc2NjAsImV4cCI6MjA5OTYxMzY2MH0.gfT7cgf67KBEP1zYlWzHgS14369fgbS46ipHpL4eyjE";
 
 // Initialize Supabase Client if script is loaded via CDN
 let supabaseClient = null;
@@ -23,7 +23,7 @@ function getSupabase() {
 // Utility helper to check demo mode status
 function isDemoMode() {
   const mode = localStorage.getItem('vg_demo_mode');
-  return mode === null ? true : mode === 'true'; // Default to Demo Mode for seamless presentation
+  return mode === 'true'; // Default to FALSE to connect to live Supabase backend
 }
 
 function setDemoMode(active) {
